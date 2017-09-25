@@ -4,7 +4,7 @@ import {
   Button,
 } from 'react-native';
 
-var DEFAULT_URL = 'http://rem.komica21.net/00/index.htm';
+var DEFAULT_URL = 'http://rem.komica2.net/00/index.htm';
 
 const injectJSCode = `
     (function(){ 
