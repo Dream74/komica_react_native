@@ -1,9 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   WebView,
 } from 'react-native';
-
-var DEFAULT_URL = 'http://rem.komica2.net/00/index.htm';
 
 const injectJSCode = `
     (function(){ 
@@ -21,7 +20,7 @@ const injectJSCode = `
       rlink: 回應文章按鈕
       header: 看板描述
       */
-      document.querySelectorAll('#header,#toplink,#postform,#page_switch,#del,#footer,center,.top,input,.-del-button,.rlink').forEach((e) => e.remove());
+      document.querySelectorAll('#toplink,#postform,#page_switch,#del,#footer,center,.top,input,.-del-button,.rlink').forEach((e) => e.remove());
 
       /* 關閉回文 */
       $('div > div.post-head > span.qlink').unbind('click');
@@ -35,9 +34,11 @@ const injectJSCode = `
 
 export default class Board extends React.Component {
   render() {
+    const { title, url } = this.props;
+
     return (
       <WebView
-        source={{uri: DEFAULT_URL}}
+        source={{uri: url}}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
         injectedJavaScript={injectJSCode}
@@ -49,3 +50,13 @@ export default class Board extends React.Component {
     );
   }
 }
+
+Board.propTypes = {
+  title: PropTypes.string,
+  url: PropTypes.string,
+};
+
+Board.defaultProps = {
+  title: '綜合',
+  url: 'http://rem.komica2.net/00/index.htm',
+};

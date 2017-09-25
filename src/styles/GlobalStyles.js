@@ -1,14 +1,17 @@
 import { Platform } from 'react-native';
 
-const major_color = '#3c4b63';
-const enable_color = '#5bba9a';
-const disable_color = '#a1fbe2';
+
+// PTT+ theme
+// const major_color = '#3c4b63';
+// const enable_color = '#5bba9a';
+// const disable_color = '#a1fbe2';
+// 
+const major_color = '#ffffee';
+const second_color = '#f0e0d6';
+
 
 module.exports = {
-  major_color,
-  enable_color,
-  disable_color,
-
+  backgroundColor: major_color,
   navigation_header_style: {
     headerStyle: {
       backgroundColor: 'white',
