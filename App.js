@@ -1,29 +1,16 @@
 import React from 'react';
 import {
-  AppRegistry,
-  Component,
-  StyleSheet,
-  Text,
   View,
+  Text,
   WebView,
 } from 'react-native';
 
-var DEFAULT_URL = 'http://rem.komica2.net/00b/index.htm';
-
-const injectJSCode = `
-  // remove un-used areas.
-  document.querySelectorAll('#toplink,#postform,center,.top').forEach((e) => e.remove());
-`;
+import AppNavigator from './src/components/AppNavigator';
 
 export default class App extends React.Component {
   render() {
     return (
-      <WebView
-        source={{uri: DEFAULT_URL}}
-        domStorageEnabled={true}
-        injectedJavaScript={injectJSCode}
-        javaScriptEnabled={false}
-      />
+        <AppNavigator />
     );
   }
 }
