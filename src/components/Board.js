@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   WebView,
+  Button,
 } from 'react-native';
 
 const injectJSCode = `
@@ -33,12 +34,23 @@ const injectJSCode = `
 `;
 
 export default class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.error = this.error.bind(this);
+  }
+
+  error(e) {
+    this.refs.mainWebView.reload()
+  }
+
   render() {
     const { title, url } = this.props;
 
     return (
       <WebView
         source={{uri: url}}
+        renderError={ e => <Button title="Refresh" onPress={this.error}/> }
+        ref="mainWebView"
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
         injectedJavaScript={injectJSCode}
