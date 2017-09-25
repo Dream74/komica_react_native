@@ -1,9 +1,10 @@
 import React from 'react';
 import {
   WebView,
+  Button,
 } from 'react-native';
 
-var DEFAULT_URL = 'http://rem.komica2.net/00/index.htm';
+var DEFAULT_URL = 'http://rem.komica21.net/00/index.htm';
 
 const injectJSCode = `
     (function(){ 
@@ -21,7 +22,7 @@ const injectJSCode = `
       rlink: 回應文章按鈕
       header: 看板描述
       */
-      document.querySelectorAll('#header,#toplink,#postform,#page_switch,#del,#footer,center,.top,input,.-del-button,.rlink').forEach((e) => e.remove());
+      document.querySelectorAll('#header,#toplink,#postform,#del,#footer,center,.top,input,.-del-button,.rlink').forEach((e) => e.remove());
 
       /* 關閉回文 */
       $('div > div.post-head > span.qlink').unbind('click');
@@ -34,9 +35,20 @@ const injectJSCode = `
 `;
 
 export default class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.error = this.error.bind(this);
+  }
+
+  error(e) {
+    this.refs.mainWebView.reload()
+  }
+
   render() {
     return (
       <WebView
+        renderError={ e => <Button title="Refresh" onPress={this.error}/> }
+        ref="mainWebView"
         source={{uri: DEFAULT_URL}}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
