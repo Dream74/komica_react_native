@@ -60,6 +60,7 @@ export default class App extends React.Component {
             menu={menu}
             isOpen={this.state.isOpen}
             onChange={isOpen => this.updateMenuState(isOpen)}
+            openMenuOffset={200}
           >
             <View style={styles.container}>
               <TouchableOpacity
