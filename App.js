@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  Text,
   TouchableOpacity,
 } from 'react-native';
 
@@ -28,6 +29,8 @@ export default class App extends React.Component {
 
     this.state = {
       isOpen: false,
+      title: '綜合',
+      url: 'http://rem.komica2.net/00/pixmicat.php',
     };
   }
 
@@ -63,11 +66,17 @@ export default class App extends React.Component {
             openMenuOffset={200}
           >
             <View style={styles.container}>
-              <TouchableOpacity
-                onPress={this.toggle}
+              <View style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 48,
+              }}
               >
-                <Icon name="menu" size={32} color="black" />
-              </TouchableOpacity>
+                <TouchableOpacity onPress={this.toggle} style={{ position: 'absolute', left: 18 }}>
+                  <Icon name="menu" size={32} color="black" />
+                </TouchableOpacity>
+                <Text style={{ fontSize: 24 }}>{title}</Text>
+              </View>
               <Board
                 style={{
                   backgroundColor: 'blue',
