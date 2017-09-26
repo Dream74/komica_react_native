@@ -92,13 +92,24 @@ export default class Board extends React.Component {
 
         // Prevent click link
         $("a:not([class='file-thumb'])").attr('href', 'javascript:void(0)');
-        /*
-        
-      // 整個版面顏色 html
-      // background, color
-      // document.querySelector("html").style.background = '#';
-      // 回文顏色 .reply
-       */
+
+        $('html')
+          .css('background', '#1D1F21')
+          .css('color', '#C5C8C6');
+
+        $('.qlink,a:link,.text-button')
+          .css('color', '#81A2BE')
+          .css('text-decoration', 'none');
+
+        $('.reply')
+          .css('background', '#282A2E');
+
+        $('.title')
+          .css('color', '#B294BB');
+
+        $('.id3')
+          .css('color', 'rgba(255,255,21,0.8)');
+
         return $.html();
       })
       .then((html) => {
@@ -135,8 +146,9 @@ export default class Board extends React.Component {
         }}
         >
           <Text style={{
-            fontSize: 16,
+            fontSize: 24,
             paddingBottom: 20,
+            color: '#a1fbe2',
           }}
           >載入中</Text>
 

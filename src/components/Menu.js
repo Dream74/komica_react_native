@@ -11,9 +11,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     paddingBottom: 5,
+    color: 'white',
   },
   sectionHeader: {
-    color: '#962c2a',
+    color: '#a1fbe2',
     fontSize: 32,
   },
 });
@@ -356,6 +357,7 @@ export default function Menu({ onItemSelected }) {
         </TouchableOpacity>)
       }
       renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.category}</Text>}
+      style={{ margin: 10 }}
     />
   );
 }

@@ -6,8 +6,7 @@ import { Platform } from 'react-native';
 // const enable_color = '#5bba9a';
 // const disable_color = '#a1fbe2';
 // 
-const major_color = '#ffffee';
-const second_color = '#f0e0d6';
+const major_color = '#1D1F21';
 
 
 module.exports = {

@@ -17,7 +17,7 @@ import { backgroundColor } from './src/styles/GlobalStyles';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor,
+    backgroundColor: '#3c4b63',
   },
 });
 
@@ -73,9 +73,9 @@ export default class App extends React.Component {
               }}
               >
                 <TouchableOpacity onPress={this.toggle} style={{ position: 'absolute', left: 18 }}>
-                  <Icon name="menu" size={32} color="black" />
+                  <Icon name="menu" size={32} color="#a1fbe2" />
                 </TouchableOpacity>
-                <Text style={{ fontSize: 24 }}>{title}</Text>
+                <Text style={{ fontSize: 24, color: '#a1fbe2' }}>{title}</Text>
               </View>
               <Board
                 style={{
