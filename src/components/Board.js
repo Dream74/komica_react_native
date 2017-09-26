@@ -2,64 +2,178 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   WebView,
+  View,
+  Text,
   Button,
 } from 'react-native';
 
+import cio from 'cheerio-without-node-native';
+
 const injectJSCode = `
     (function(){ 
-      /*
-      // remove un-used areas.
-      toplink: 
-      postform: 發文
-      center: 廣告
-      top: 分隔線
-      page_switch: 切換分頁
-      del: 檢舉/刪除文章的功能
-      footer: 版權、統計人數
-      input: 刪除文章的選項
-      -del-button: 刪除文章按鈕
-      rlink: 回應文章按鈕
-      header: 看板描述
-      */
-      document.querySelectorAll('#toplink,#postform,#del,#footer,center,.top,input,.-del-button,.rlink').forEach((e) => e.remove());
-
       /* 關閉回文 */
       $('div > div.post-head > span.qlink').unbind('click');
-
-      // 整個版面顏色 html
-      // background, color
-      document.querySelector("html").style.background = '#';
-      // 回文顏色 .reply
     }());
 `;
 
 export default class Board extends React.Component {
   constructor(props) {
     super(props);
+
     this.error = this.error.bind(this);
+    this.parseHTML = this.parseHTML.bind(this);
+
+    this.state = {
+      loading: false,
+      fail: false,
+      html: '',
+    };
+  }
+
+  componentDidMount() {
+    const { url } = this.props;
+    this.parseHTML(url);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const newUrl = nextProps.url;
+    const oldUrl = this.props.url;
+
+    if (newUrl !== oldUrl) {
+      this.parseHTML(newUrl);
+    }
+  }
+
+  parseHTML(url) {
+    console.log('parseHTML', url);
+    this.setState({
+      loading: true,
+      fail: false,
+      html: '',
+    });
+
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
+
+        return res;
+      })
+      .then(res => res.text())
+      .then((body) => {
+        const $ = cio.load(body);
+
+        /*
+        header: 看板描述
+        toplink: 
+        postform: 發文
+        del: 檢舉/刪除文章的功能
+        footer: 版權、統計人數
+        page_switch: 切換分頁
+      center: 廣告
+      top: 分隔線
+      input: 刪除文章的選項
+      -del-button: 刪除文章按鈕
+      rlink: 回應文章按鈕
+      script:not([src*='common']: 所有非必要的 JS, ex: GA, ...
+      hr:nth-last-child(-n+2): 塞廣告的分割線
+      */
+
+        // remove un-used areas.
+        let ruleBeRemoved = '#header,#toplink,#postform,#del,#footer,#page_switch,center,.top,input,.-del-button,.rlink';
+        // Monitor Javascript
+        ruleBeRemoved += ",script:not([src*='common'])";
+        // ugly line
+        ruleBeRemoved += ',hr:nth-last-child(-n+2)';
+        // it only be used in ads.
+        ruleBeRemoved += ',style';
+        $(ruleBeRemoved).remove();
+
+        /*
+        
+      // 整個版面顏色 html
+      // background, color
+      // document.querySelector("html").style.background = '#';
+      // 回文顏色 .reply
+       */
+        return $.html();
+      })
+      .then((html) => {
+        this.setState({
+          html,
+          fail: false,
+          loading: false,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          html: '',
+          fail: true,
+          loading: false,
+        });
+      });
   }
 
   error() {
-    this.refs.mainWebView.reload();
+    const { url } = this.props;
+    this.parseHTML(url);
   }
 
   render() {
     const { url } = this.props;
+    const { html, loading, fail } = this.state;
+
+    if (loading) {
+      return (
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        >
+          <Text style={{
+            fontSize: 16,
+            paddingBottom: 20,
+          }}
+          >載入中</Text>
+
+        </View>);
+    } else if (fail) {
+      return (
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        >
+          <Text style={{
+            fontSize: 16,
+            paddingBottom: 20,
+          }}
+          >網路連線失敗，請檢查網路狀態後再重新整理</Text>
+          <Button title="重新整理" onPress={this.error} />
+        </View>);
+    }
 
     return (
       <WebView
-        source={{ uri: url }}
+        source={{
+          html,
+          baseUrl: url,
+        }}
         injectedJavaScript={injectJSCode}
         // onNavigationStateChange={()=> {console.log("Change")}}
-        renderError={() => <Button title="Refresh" onPress={this.error} />}
-        ref="mainWebView"
+        onError={() => { this.setState({ fail: true }); }}
+        // renderError={ErrView}
+        automaticallyAdjustContentInsets={false}
         // iOS only
         allowsInlineMediaPlayback
         dataDetectorTypes="none"
         scalesPageToFit={false}
         // android only
         domStorageEnabled
-        javaScriptEnabled
+        javaScriptEnabled={false}
       />
     );
   }
