@@ -2,14 +2,11 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  WebView,
   TouchableOpacity,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Entypo';
 import SideMenu from 'react-native-side-menu';
-import AppNavigator from './src/components/AppNavigator';
 
 import Menu from './src/components/Menu';
 import Board from './src/components/Board';
@@ -34,9 +31,11 @@ export default class App extends React.Component {
     };
   }
 
-  toggle() {
+  onMenuItemSelected = (item) => {
     this.setState({
-      isOpen: !this.state.isOpen,
+      isOpen: false,
+      title: item.title,
+      url: item.url,
     });
   }
 
@@ -44,11 +43,9 @@ export default class App extends React.Component {
     this.setState({ isOpen });
   }
 
-  onMenuItemSelected = item => {
+  toggle() {
     this.setState({
-      isOpen: false,
-      title: item.title,
-      url: item.url,
+      isOpen: !this.state.isOpen,
     });
   }
 
@@ -57,21 +54,21 @@ export default class App extends React.Component {
     const { title, url } = this.state;
 
     return (
-      <View style={{ flex: 1, backgroundColor, }} >
-        <View style={{ flex: 1, marginTop: 18, }} >
+      <View style={{ flex: 1, backgroundColor }} >
+        <View style={{ flex: 1, marginTop: 18 }} >
           <SideMenu
             menu={menu}
             isOpen={this.state.isOpen}
             onChange={isOpen => this.updateMenuState(isOpen)}
           >
             <View style={styles.container}>
-              <TouchableOpacity 
-                onPress={this.toggle} 
+              <TouchableOpacity
+                onPress={this.toggle}
               >
                 <Icon name="menu" size={32} color="black" />
               </TouchableOpacity>
-              <Board 
-                style={{ 
+              <Board
+                style={{
                   backgroundColor: 'blue',
                   flex: 1,
                 }}
