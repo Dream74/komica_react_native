@@ -29,8 +29,8 @@ export default class App extends React.Component {
 
     this.state = {
       isOpen: false,
-      title: '綜合',
-      url: 'http://rem.komica2.net/00/pixmicat.php',
+      title: '站務公告',
+      url: 'http://komica.blogspot.com/',
     };
   }
 
