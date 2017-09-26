@@ -45,7 +45,6 @@ export default class Board extends React.Component {
   }
 
   parseHTML(url) {
-    console.log('parseHTML', url);
     this.setState({
       loading: true,
       fail: false,
@@ -65,23 +64,24 @@ export default class Board extends React.Component {
         const $ = cio.load(body);
 
         /*
-        header: 看板描述
-        toplink: 
-        postform: 發文
-        del: 檢舉/刪除文章的功能
-        footer: 版權、統計人數
-        page_switch: 切換分頁
-      center: 廣告
-      top: 分隔線
-      input: 刪除文章的選項
-      -del-button: 刪除文章按鈕
-      rlink: 回應文章按鈕
-      script:not([src*='common']: 所有非必要的 JS, ex: GA, ...
-      hr:nth-last-child(-n+2): 塞廣告的分割線
-      */
+          header: 看板描述
+          toplink: 
+          postform: 發文
+          del: 檢舉/刪除文章的功能
+          footer: 版權、統計人數
+          page_switch: 切換分頁
+          topiclist:標題一覽
+          center: 廣告
+          top: 分隔線
+          input: 刪除文章的選項
+          -del-button: 刪除文章按鈕
+          rlink: 回應文章按鈕
+          script:not([src*='common']: 所有非必要的 JS, ex: GA, ...
+          hr:nth-last-child(-n+2): 塞廣告的分割線
+        */
 
         // remove un-used areas.
-        let ruleBeRemoved = '#header,#toplink,#postform,#del,#footer,#page_switch,center,.top,input,.-del-button,.rlink';
+        let ruleBeRemoved = '#header,#toplink,#postform,#del,#footer,#page_switch,.page_switch,#topiclist,center,.top,input,.-del-button,.rlink';
         // Monitor Javascript
         ruleBeRemoved += ",script:not([src*='common'])";
         // ugly line
@@ -90,6 +90,8 @@ export default class Board extends React.Component {
         ruleBeRemoved += ',style';
         $(ruleBeRemoved).remove();
 
+        // Prevent click link
+        $("a:not([class='file-thumb'])").attr('href', 'javascript:void(0)');
         /*
         
       // 整個版面顏色 html
