@@ -21,7 +21,7 @@ const injectJSCode = `
       rlink: 回應文章按鈕
       header: 看板描述
       */
-      document.querySelectorAll('#toplink,#postform,#page_switch,#del,#footer,center,.top,input,.-del-button,.rlink').forEach((e) => e.remove());
+      document.querySelectorAll('#toplink,#postform,#del,#footer,center,.top,input,.-del-button,.rlink').forEach((e) => e.remove());
 
       /* 關閉回文 */
       $('div > div.post-head > span.qlink').unbind('click');
@@ -39,25 +39,27 @@ export default class Board extends React.Component {
     this.error = this.error.bind(this);
   }
 
-  error(e) {
-    this.refs.mainWebView.reload()
+  error() {
+    this.refs.mainWebView.reload();
   }
 
   render() {
-    const { title, url } = this.props;
+    const { url } = this.props;
 
     return (
       <WebView
-        source={{uri: url}}
-        renderError={ e => <Button title="Refresh" onPress={this.error}/> }
-        ref="mainWebView"
-        domStorageEnabled={true}
-        allowsInlineMediaPlayback={true}
+        source={{ uri: url }}
         injectedJavaScript={injectJSCode}
-        javaScriptEnabled={true}
-        dataDetectorTypes='none'
+        // onNavigationStateChange={()=> {console.log("Change")}}
+        renderError={() => <Button title="Refresh" onPress={this.error} />}
+        ref="mainWebView"
+        // iOS only
+        allowsInlineMediaPlayback
+        dataDetectorTypes="none"
         scalesPageToFit={false}
-        onNavigationStateChange={()=> {console.log("Change")}}
+        // android only
+        domStorageEnabled
+        javaScriptEnabled
       />
     );
   }

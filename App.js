@@ -52,7 +52,6 @@ export default class App extends React.Component {
     });
   }
 
-
   render() {
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
     const { title, url } = this.state;
