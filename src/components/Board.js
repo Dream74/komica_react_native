@@ -93,24 +93,38 @@ export default class Board extends React.Component {
         // Prevent click link
         $("a:not([class='file-thumb'])").attr('href', 'javascript:void(0)');
 
-        $('html')
-          .css('background', '#1D1F21')
-          .css('color', '#C5C8C6');
+        $('body').append(`<style type="text/css">
+html {
+    background: #1D1F21;
+    color: #C5C8C6;
+}
 
-        $('.qlink,a:link,.text-button')
-          .css('color', '#81A2BE')
-          .css('text-decoration', 'none');
+.reply {
+    background: #282A2E;
+}
 
-        $('.reply')
-          .css('background', '#282A2E');
+.title {
+    color: #B294BB;
+}
 
-        $('.title')
-          .css('color', '#B294BB');
+.id, .id3 {
+    color: rgba(255,255,21,0.8);
+}
 
-        $('.id3')
-          .css('color', 'rgba(255,255,21,0.8)');
+textarea {
+    background-color: #CDCDCD;
+}
 
-        return $.html();
+a:link, .qlink, .text-button {
+    color: #81A2BE;
+    text-decoration: none;
+}
+
+.post:target { background: #181818; } 
+.popup { background: #282A2E; }
+</style>
+<style type="text/css">
+`);
       })
       .then((html) => {
         this.setState({
@@ -163,32 +177,48 @@ export default class Board extends React.Component {
         >
           <Text style={{
             fontSize: 16,
-            paddingBottom: 20,
+            paddingBottom: 30,
+            color: '#a1fbe2',
           }}
           >網路連線失敗，請檢查網路狀態後再重新整理</Text>
           <Button title="重新整理" onPress={this.error} />
         </View>);
     }
 
+
     return (
-      <WebView
-        source={{
-          html,
-          baseUrl: url,
+      <View style={{
+        flex: 1,
+      }}
+      >
+        <WebView
+          ref="mainWebView"
+          source={{
+            html,
+            baseUrl: url,
+          }}
+          injectedJavaScript={injectJSCode}
+          onNavigationStateChange={(navState) => {
+            console.log('onNavigationStateChange', navState);
+          }}
+
+          onError={() => { this.setState({ fail: true }); }}
+          // renderError={ErrView}
+          automaticallyAdjustContentInsets
+          // iOS only
+          onShouldStartLoadWithRequest={(event) => {
+            console.log('onShoudleStartLoadWithRequest', event);
+            return true;
+          }}
+          allowsInlineMediaPlayback
+          dataDetectorTypes="none"
+          scalesPageToFit={false}
+          // android only
+          domStorageEnabled
+          javaScriptEnabled
+        />
         }}
-        injectedJavaScript={injectJSCode}
-        // onNavigationStateChange={()=> {console.log("Change")}}
-        onError={() => { this.setState({ fail: true }); }}
-        // renderError={ErrView}
-        automaticallyAdjustContentInsets={false}
-        // iOS only
-        allowsInlineMediaPlayback
-        dataDetectorTypes="none"
-        scalesPageToFit={false}
-        // android only
-        domStorageEnabled
-        javaScriptEnabled={false}
-      />
+      </View>
     );
   }
 }
