@@ -13,6 +13,44 @@ const injectJSCode = `
     (function(){ 
       /* 關閉回文 */
       $('div > div.post-head > span.qlink').unbind('click');
+      $('a.file-thumb').unbind('click')
+      $('a.file-thumb').click(function(e) {
+        if( !$(this).has('img').length ) return;
+        if( e.button == 1 ) return;
+        e.preventDefault();
+        
+        var url = $(this).attr('href');
+        var type = url.split('.'); type=type[type.length-1].toLowerCase();
+        var flg = $(this).has('.-expanded').length ? true : false;
+        var html = '';
+  
+  
+        if(type=='webm') {
+          html = '<div class="-expanded" style="margin: 0.2em; display:block;">';
+          html+= '<div>[<span class="expanded-close text-button">收回</span>]</div>';
+          html+= '<video controls loop autoplay muted style="max-width:100%;" src="' + url + '"></video>';
+          html+= '</div>';
+        }
+        else {
+          html = '<div class="-expanded" style="margin: 0.2em; display:block;"><img class="expanded-element expanded-close" style="max-width:100%;  cursor:pointer;" src="' + url + '"></img></div>';
+        }
+        $(this).hide();
+        $(this).after(html);
+        
+        $(this).next('div.-expanded').find('.expanded-close').click(function(e) {
+          $(this).closest('.-expanded').parent().children('.file-thumb').each(function() {
+            if( !$(this).has('img').length ) return;
+            $(this).show();
+          });
+          
+          var cur = $(this).closest('.post').offset().top;
+          var h1 = $(window).scrollTop();
+          var h2 = h1 + $(window).innerHeight();
+          if(cur<h1 || cur>h2) $('html,body').animate({scrollTop:cur}, 0);
+          
+          $(this).closest('.-expanded').remove();
+        });
+      }); 
     }());
 `;
 
