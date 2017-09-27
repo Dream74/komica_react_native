@@ -242,13 +242,12 @@ a:link, .qlink, .text-button {
         />
         <View style={{
           flexDirection: 'row',
-          background: 'red',
           justifyContent: 'space-between',
         }}
         >
           <Button
             title="上一頁"
-            color="#white"
+            color="white"
             disabled={!forwardUrl}
             onPress={() => {
               console.log(forwardUrl);
@@ -257,7 +256,7 @@ a:link, .qlink, .text-button {
           />
           <Button
             title="下一頁"
-            color="#white"
+            color="white"
             disabled={!nextUrl}
             onPress={() => {
               console.log(nextUrl);
