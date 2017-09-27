@@ -63,6 +63,9 @@ export default class Board extends React.Component {
       .then((body) => {
         const $ = cio.load(body);
 
+        const forwardUrl = $('#page_switch > table > tr > td:nth-child(1) > form').attr('action') || $('.page_switch > div.ul > div.forward > a').attr('href');
+        const nextUrl = $('#page_switch > table > tr > td:nth-child(3) > form').attr('action') || $('.page_switch > div.ul > div.next > a').attr('href');
+
         /*
           header: 看板描述
           toplink: 
@@ -81,13 +84,15 @@ export default class Board extends React.Component {
         */
 
         // remove un-used areas.
-        let ruleBeRemoved = '#header,#toplink,#postform,#del,#footer,#page_switch,.page_switch,#topiclist,center,.top,input,.-del-button,.rlink';
+        let ruleBeRemoved = '#header,#toplink,#postform,#del,#footer,#topiclist,center,.top,input,.-del-button,.rlink';
+        // switch page
+        ruleBeRemoved += ',#page_switch,.page_switch';
         // Monitor Javascript
         ruleBeRemoved += ",script:not([src*='common'])";
         // ugly line
         ruleBeRemoved += ',hr:nth-last-child(-n+2)';
         // it only be used in ads.
-        ruleBeRemoved += ',style';
+        ruleBeRemoved += ',style,.ads_right';
         $(ruleBeRemoved).remove();
 
         // Prevent click link
@@ -125,15 +130,22 @@ a:link, .qlink, .text-button {
 </style>
 <style type="text/css">
 `);
+        return {
+          html: $.html(),
+          forwardUrl,
+          nextUrl,
+        };
       })
-      .then((html) => {
+      .then(({ html, forwardUrl, nextUrl }) => {
         this.setState({
           html,
+          forwardUrl,
+          nextUrl,
           fail: false,
           loading: false,
         });
       })
-      .catch(() => {
+      .catch((e) => {
         this.setState({
           html: '',
           fail: true,
@@ -149,7 +161,7 @@ a:link, .qlink, .text-button {
 
   render() {
     const { url } = this.props;
-    const { html, loading, fail } = this.state;
+    const { html, loading, fail, forwardUrl, nextUrl } = this.state;
 
     if (loading) {
       return (
@@ -181,7 +193,18 @@ a:link, .qlink, .text-button {
             color: '#a1fbe2',
           }}
           >網路連線失敗，請檢查網路狀態後再重新整理</Text>
-          <Button title="重新整理" onPress={this.error} />
+
+          <View style={{
+            backgroundColor: '#a1fbe2',
+          }}
+          >
+            <Button
+              title="重新整理"
+              onPress={this.error}
+              color="black"
+            />
+          </View>
+
         </View>);
     }
 
@@ -217,7 +240,31 @@ a:link, .qlink, .text-button {
           domStorageEnabled
           javaScriptEnabled
         />
+        <View style={{
+          flexDirection: 'row',
+          background: 'red',
+          justifyContent: 'space-between',
         }}
+        >
+          <Button
+            title="上一頁"
+            color="#white"
+            disabled={!forwardUrl}
+            onPress={() => {
+              console.log(forwardUrl);
+              this.parseHTML(url + forwardUrl);
+            }}
+          />
+          <Button
+            title="下一頁"
+            color="#white"
+            disabled={!nextUrl}
+            onPress={() => {
+              console.log(nextUrl);
+              this.parseHTML(url + nextUrl);
+            }}
+          />
+        </View>
       </View>
     );
   }
