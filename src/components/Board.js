@@ -7,6 +7,12 @@ import {
   Button,
 } from 'react-native';
 
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+} from 'react-native-admob';
 import cio from 'cheerio-without-node-native';
 
 const injectJSCode = `
@@ -184,6 +190,7 @@ a:link, .qlink, .text-button {
         });
       })
       .catch((e) => {
+        console.log('fetch error', e);
         this.setState({
           html: '',
           fail: true,
@@ -202,6 +209,15 @@ a:link, .qlink, .text-button {
     const { html, loading, fail, forwardUrl, nextUrl } = this.state;
 
     if (loading) {
+      /*
+      // Display an interstitial
+      // 感覺可以在載入網頁時 餵他們吃
+      // 插頁式廣告：全版的廣告，會自然顯示在空檔和轉場 (例如過關) 時，可支援影片內容。
+      // https://support.google.com/admob/answer/6128738?ctx=ui&hl=zh-Hant
+      AdMobInterstitial.setAdUnitID('your-admob-unit-id');
+      AdMobInterstitial.setTestDeviceID('EMULATOR');
+      AdMobInterstitial.requestAd(AdMobInterstitial.showAd);
+      */
       return (
         <View style={{
           flex: 1,
@@ -302,6 +318,13 @@ a:link, .qlink, .text-button {
             }}
           />
         </View>
+
+        <AdMobBanner
+          bannerSize="fullBanner"
+          testDeviceID="EMULATOR"
+          adUnitID="ca-app-pub-5027135397412848/7769242954"
+          didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner Error', e); }}
+        />
       </View>
     );
   }
