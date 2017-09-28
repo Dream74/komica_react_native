@@ -30,7 +30,7 @@ export default class App extends React.Component {
     this.state = {
       isOpen: false,
       title: '站務公告',
-      url: 'http://komica.blogspot.com/',
+      url: 'https://komica.blogspot.com/',
     };
   }
 
