@@ -5,6 +5,7 @@ import {
   View,
   Text,
   Button,
+  Platform,
 } from 'react-native';
 
 import {
@@ -318,12 +319,11 @@ a:link, .qlink, .text-button {
             }}
           />
         </View>
-
         <AdMobBanner
           bannerSize="fullBanner"
           testDeviceID="EMULATOR"
-          adUnitID="ca-app-pub-5027135397412848/7769242954"
-          didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner Error', e); }}
+          adUnitID={(Platform.OS === 'ios') ? 'ca-app-pub-5027135397412848/7769242954' : 'ca-app-pub-5027135397412848/2994362769'}
+          didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner', 'didFailToReceiveAdWithError', e); }}
         />
       </View>
     );
