@@ -63,7 +63,7 @@ export default class App extends React.Component {
             menu={menu}
             isOpen={this.state.isOpen}
             onChange={isOpen => this.updateMenuState(isOpen)}
-            openMenuOffset={200}
+            openMenuOffset={300}
           >
             <View style={styles.container}>
               <View style={{

@@ -5,7 +5,6 @@ import {
   View,
   Text,
   Button,
-  Platform,
 } from 'react-native';
 
 import {
@@ -15,6 +14,8 @@ import {
   AdMobRewarded,
 } from 'react-native-admob';
 import cio from 'cheerio-without-node-native';
+
+import { ADMOB_BANNDER_AD_UNIT_ID, ADMOB_INTERSTITIAL_AD_UNIT_ID } from '../config/ads';
 
 const injectJSCode = `
     (function(){ 
@@ -210,15 +211,10 @@ a:link, .qlink, .text-button {
     const { html, loading, fail, forwardUrl, nextUrl } = this.state;
 
     if (loading) {
-      /*
-      // Display an interstitial
-      // 感覺可以在載入網頁時 餵他們吃
-      // 插頁式廣告：全版的廣告，會自然顯示在空檔和轉場 (例如過關) 時，可支援影片內容。
-      // https://support.google.com/admob/answer/6128738?ctx=ui&hl=zh-Hant
-      AdMobInterstitial.setAdUnitID('your-admob-unit-id');
+      /* 這是跳整個全螢幕展開的廣告 */
+      AdMobInterstitial.setAdUnitID(ADMOB_INTERSTITIAL_AD_UNIT_ID);
       AdMobInterstitial.setTestDeviceID('EMULATOR');
-      AdMobInterstitial.requestAd(AdMobInterstitial.showAd);
-      */
+      AdMobInterstitial.requestAd(AdMobInterstitial.showAd());
       return (
         <View style={{
           flex: 1,
@@ -226,12 +222,26 @@ a:link, .qlink, .text-button {
           alignItems: 'center',
         }}
         >
+
+          <AdMobBanner
+            bannerSize="mediumRectangle"
+            testDeviceID="EMULATOR"
+            adUnitID={ADMOB_BANNDER_AD_UNIT_ID}
+            adViewDidReceiveAd={() => { console.log('AdMobBanner', 'adViewDidReceiveAd'); }}
+            didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner', 'didFailToReceiveAdWithError', e); }}
+            // adViewWillPresentScreen={() => { console.log('AdMobBanner', 'adViewWillPresentScreen'); }}
+            // adViewWillDismissScreen={() => { console.log('AdMobBanner', 'adViewWillDismissScreen'); }}
+            // adViewDidDismissScreen={() => {console.log('AdMobBanner', 'adViewDidDismissScreen'); }}
+            // adViewWillLeaveApplication={() => { console.log('AdMobBanner', 'adViewWillLeaveApplication'); }}
+          />
+
+
           <Text style={{
             fontSize: 24,
-            paddingBottom: 20,
+            padding: 30,
             color: '#a1fbe2',
           }}
-          >載入中</Text>
+          >網頁正在載入中</Text>
 
         </View>);
     } else if (fail) {
@@ -322,8 +332,13 @@ a:link, .qlink, .text-button {
         <AdMobBanner
           bannerSize="fullBanner"
           testDeviceID="EMULATOR"
-          adUnitID={(Platform.OS === 'ios') ? 'ca-app-pub-5027135397412848/7769242954' : 'ca-app-pub-5027135397412848/2994362769'}
+          adUnitID={ADMOB_BANNDER_AD_UNIT_ID}
+          adViewDidReceiveAd={() => { console.log('AdMobBanner', 'adViewDidReceiveAd'); }}
           didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner', 'didFailToReceiveAdWithError', e); }}
+          // adViewWillPresentScreen={() => { console.log('AdMobBanner', 'adViewWillPresentScreen'); }}
+          // adViewWillDismissScreen={() => { console.log('AdMobBanner', 'adViewWillDismissScreen'); }}
+          // adViewDidDismissScreen={() => {console.log('AdMobBanner', 'adViewDidDismissScreen'); }}
+          // adViewWillLeaveApplication={() => { console.log('AdMobBanner', 'adViewWillLeaveApplication'); }}
         />
       </View>
     );

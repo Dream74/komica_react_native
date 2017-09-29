@@ -5,7 +5,15 @@ import {
   StyleSheet,
   Text,
   SectionList,
+  Platform,
+  View,
 } from 'react-native';
+
+import {
+  AdMobBanner,
+} from 'react-native-admob';
+
+import { ADMOB_BANNDER_AD_UNIT_ID } from '../config/ads';
 
 const styles = StyleSheet.create({
   title: {
@@ -347,18 +355,30 @@ const komica_board =
 
 export default function Menu({ onItemSelected }) {
   return (
-    <SectionList
-      sections={komica_board}
-      renderItem={({ item }) =>
-        (<TouchableOpacity
-          onPress={() => { onItemSelected(item); }}
-        >
-          <Text style={styles.title}>{item.title}</Text>
-        </TouchableOpacity>)
-      }
-      renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.category}</Text>}
-      style={{ margin: 10 }}
-    />
+    <View style={{ flex: 1 }}>
+
+      <AdMobBanner
+        bannerSize="mediumRectangle"
+        testDeviceID="EMULATOR"
+        adUnitID={ADMOB_BANNDER_AD_UNIT_ID}
+        adViewDidReceiveAd={() => { console.log('AdMobBanner', 'adViewDidReceiveAd'); }}
+        didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner', 'didFailToReceiveAdWithError', e); }}
+      />
+
+      <SectionList
+        sections={komica_board}
+        renderItem={({ item }) =>
+          (<TouchableOpacity
+            onPress={() => { onItemSelected(item); }}
+          >
+            <Text style={styles.title}>{item.title}</Text>
+          </TouchableOpacity>)
+        }
+        renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.category}</Text>}
+        style={{ margin: 10 }}
+      />
+    </View>
+
   );
 }
 
