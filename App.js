@@ -62,7 +62,6 @@ export default class App extends React.Component {
       <View
         style={{
           flex: 1,
-          marginTop: (Platform.OS === 'ios') ? 0 : 18,
           backgroundColor,
         }}
       >
