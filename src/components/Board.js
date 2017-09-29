@@ -275,9 +275,9 @@ a:link, .qlink, .text-button {
 
     if (loading) {
       /* 這是跳整個全螢幕展開的廣告 */
-      AdMobInterstitial.setAdUnitID(ADMOB_INTERSTITIAL_AD_UNIT_ID);
-      AdMobInterstitial.setTestDeviceID('EMULATOR');
-      AdMobInterstitial.requestAd(AdMobInterstitial.showAd());
+      // AdMobInterstitial.setAdUnitID(ADMOB_INTERSTITIAL_AD_UNIT_ID);
+      // AdMobInterstitial.setTestDeviceID('EMULATOR');
+      // AdMobInterstitial.requestAd(AdMobInterstitial.showAd());
       return (
         <View style={{
           flex: 1,
