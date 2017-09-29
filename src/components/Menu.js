@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   SectionList,
-  Platform,
   View,
 } from 'react-native';
 
@@ -14,6 +13,7 @@ import {
 } from 'react-native-admob';
 
 import { ADMOB_BANNDER_AD_UNIT_ID } from '../config/ads';
+import { backgroundColor } from '../styles/GlobalStyles';
 
 const styles = StyleSheet.create({
   title: {
@@ -355,7 +355,7 @@ const komica_board =
 
 export default function Menu({ onItemSelected }) {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor }}>
 
       <AdMobBanner
         bannerSize="mediumRectangle"

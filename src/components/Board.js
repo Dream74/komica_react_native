@@ -313,10 +313,8 @@ a:link, .qlink, .text-button {
           padding: 10,
         }}
         >
-
           <TouchableOpacity
             style={{
-              background: '#3c4b63',
               justifyContent: 'center',
               alignContent: 'center',
             }}
