@@ -5,6 +5,8 @@ import {
   View,
   Text,
   Button,
+  Platform,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -308,26 +310,42 @@ a:link, .qlink, .text-button {
         <View style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
+          padding: 10,
         }}
         >
-          <Button
-            title="上一頁"
-            color="white"
+
+          <TouchableOpacity
+            style={{
+              background: '#3c4b63',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            onPress={() => {
+              if (forwardUrl !== undefined) {
+                console.log(forwardUrl);
+                this.parseHTML(url + forwardUrl);
+              }
+            }}
             disabled={!forwardUrl}
-            onPress={() => {
-              console.log(forwardUrl);
-              this.parseHTML(url + forwardUrl);
+          >
+            <Text style={{ color: (!forwardUrl) ? '#3c4b63' : 'white', fontSize: 25 }}>上一頁</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignContent: 'center',
             }}
-          />
-          <Button
-            title="下一頁"
-            color="white"
+            onPress={() => {
+              if (nextUrl !== undefined) {
+                console.log(forwardUrl);
+                this.parseHTML(url + nextUrl);
+              }
+            }}
             disabled={!nextUrl}
-            onPress={() => {
-              console.log(nextUrl);
-              this.parseHTML(url + nextUrl);
-            }}
-          />
+          >
+            <Text style={{ color: (!nextUrl) ? '#3c4b63' : 'white', fontSize: 25 }}>下一頁</Text>
+          </TouchableOpacity>
         </View>
         <AdMobBanner
           bannerSize="fullBanner"
