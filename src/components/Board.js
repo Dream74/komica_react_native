@@ -273,13 +273,22 @@ a:link, .qlink, .text-button {
 
   render() {
     const { url } = this.props;
-    const { html, loading, fail, forwardUrl, nextUrl } = this.state;
+    const { html, loading, fail, forwardUrl, nextUrl, goback } = this.state;
+
+    const WebViewGobackView =
+      (goback) ? (<WebViewGoback
+        onPress={() => {
+          this.setState({ goback: false });
+          this.parseHTML(url);
+        }}
+      />) : null;
 
     if (loading) {
       /* 這是跳整個全螢幕展開的廣告 */
       // AdMobInterstitial.setAdUnitID(ADMOB_INTERSTITIAL_AD_UNIT_ID);
       // AdMobInterstitial.setTestDeviceID('EMULATOR');
       // AdMobInterstitial.requestAd(AdMobInterstitial.showAd());
+      console.log('Render Loading');
       return (
         <View style={{
           flex: 1,
@@ -300,16 +309,16 @@ a:link, .qlink, .text-button {
             // adViewWillLeaveApplication={() => { console.log('AdMobBanner', 'adViewWillLeaveApplication'); }}
           />
 
-
           <Text style={{
             fontSize: 24,
             padding: 30,
             color: '#a1fbe2',
           }}
-          >網頁正在載入中</Text>
+          >正在載入中</Text>
 
         </View>);
     } else if (fail) {
+      console.log('Render fail');
       return (
         <View style={{
           flex: 1,
@@ -334,10 +343,8 @@ a:link, .qlink, .text-button {
               color="black"
             />
           </View>
-
         </View>);
     }
-
 
     console.log('Render Loading WebView');
     return (
