@@ -1237,7 +1237,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.magic6.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = net.magic6.komica.ios;
 				PRODUCT_NAME = komica_react_native_proj;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1261,7 +1261,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.magic6.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = net.magic6.komica.ios;
 				PRODUCT_NAME = komica_react_native_proj;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
