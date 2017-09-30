@@ -47,6 +47,8 @@
 		8926053BAC89462BB5B2F00E /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53140FDCB1CE4AA884150683 /* MaterialCommunityIcons.ttf */; };
 		BD41C4AABDC24C338FB0AC8C /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5700A55A394048189733AF2A /* Feather.ttf */; };
 		F1D66BB71F7D124500403993 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1D66B971F7D124500403993 /* GoogleMobileAds.framework */; };
+		F1E2B1281F801078004C6936 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1E2B1261F801027004C6936 /* Fabric.framework */; };
+		F1E2B1291F80107C004C6936 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1E2B1271F801027004C6936 /* Crashlytics.framework */; };
 		F498285437DA4B21BD930BD2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FEDD12A9032C440D803D60F5 /* MaterialIcons.ttf */; };
 		FB5E8F62052E4284BFB56DB2 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0ADEEBB066044D3FA2D63DA3 /* Foundation.ttf */; };
 /* End PBXBuildFile section */
@@ -336,6 +338,8 @@
 		F147CD3D1F7CFFAE008D532D /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 		F1D66B881F7D118C00403993 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "../../../Downloads/GoogleMobileAdsSdkiOS-7.24.0/GoogleMobileAds.framework"; sourceTree = "<group>"; };
 		F1D66B971F7D124500403993 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		F1E2B1261F801027004C6936 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		F1E2B1271F801027004C6936 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		FEDD12A9032C440D803D60F5 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -352,6 +356,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1E2B1291F80107C004C6936 /* Crashlytics.framework in Frameworks */,
+				F1E2B1281F801078004C6936 /* Fabric.framework in Frameworks */,
 				F1D66BB71F7D124500403993 /* GoogleMobileAds.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -571,6 +577,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F1E2B1271F801027004C6936 /* Crashlytics.framework */,
+				F1E2B1261F801027004C6936 /* Fabric.framework */,
 				13B07FAE1A68108700A75B9A /* komica_react_native_proj */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* komica_react_native_projTests */,
@@ -677,6 +685,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				F1E2B1061F800F9C004C6936 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1117,6 +1126,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		F1E2B1061F800F9C004C6936 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 64fabaaedc74148b6110f8296150ba747089cca7 34441898bf18d4258ab087a62f397c19268d8c1d6f02305888e74e0cba70c497";
 		};
 /* End PBXShellScriptBuildPhase section */
 
