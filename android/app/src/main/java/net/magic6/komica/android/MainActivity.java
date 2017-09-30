@@ -1,4 +1,4 @@
-package com.komica_react_native_proj;
+package net.magic6.komica.android;
 
 import com.facebook.react.ReactActivity;
 import com.sbugert.rnadmob.RNAdMobPackage;

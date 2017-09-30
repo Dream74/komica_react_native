@@ -1,4 +1,4 @@
-package com.komica_react_native_proj;
+package net.magic6.komica.android;
 
 import android.app.Application;
 
@@ -12,6 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.sbugert.rnadmob.RNAdMobPackage;
+
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import io.fabric.sdk.android.Fabric;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -38,5 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    Fabric.with(this, new Crashlytics());
+    Fabric.with(this, new Answers());
   }
 }
