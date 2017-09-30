@@ -375,6 +375,9 @@ a:link, .qlink, .text-button {
           onPress={(newUrl) => { this.parseHTML(newUrl); }}
         />
         <AdMobBanner
+          style={{
+            alignSelf: 'center',
+          }}
           bannerSize="fullBanner"
           testDeviceID="EMULATOR"
           adUnitID={ADMOB_BANNDER_AD_UNIT_ID}
