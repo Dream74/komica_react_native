@@ -284,10 +284,6 @@ a:link, .qlink, .text-button {
       />) : null;
 
     if (loading) {
-      /* 這是跳整個全螢幕展開的廣告 */
-      // AdMobInterstitial.setAdUnitID(ADMOB_INTERSTITIAL_AD_UNIT_ID);
-      // AdMobInterstitial.setTestDeviceID('EMULATOR');
-      // AdMobInterstitial.requestAd(AdMobInterstitial.showAd());
       console.log('Render Loading');
       return (
         <View style={{
@@ -301,12 +297,7 @@ a:link, .qlink, .text-button {
             bannerSize="mediumRectangle"
             testDeviceID="EMULATOR"
             adUnitID={ADMOB_BANNDER_AD_UNIT_ID}
-            adViewDidReceiveAd={() => { console.log('AdMobBanner', 'adViewDidReceiveAd'); }}
             didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner', 'didFailToReceiveAdWithError', e); }}
-            // adViewWillPresentScreen={() => { console.log('AdMobBanner', 'adViewWillPresentScreen'); }}
-            // adViewWillDismissScreen={() => { console.log('AdMobBanner', 'adViewWillDismissScreen'); }}
-            // adViewDidDismissScreen={() => {console.log('AdMobBanner', 'adViewDidDismissScreen'); }}
-            // adViewWillLeaveApplication={() => { console.log('AdMobBanner', 'adViewWillLeaveApplication'); }}
           />
 
           <Text style={{
@@ -399,12 +390,7 @@ a:link, .qlink, .text-button {
           bannerSize="fullBanner"
           testDeviceID="EMULATOR"
           adUnitID={ADMOB_BANNDER_AD_UNIT_ID}
-          adViewDidReceiveAd={() => { console.log('AdMobBanner', 'adViewDidReceiveAd'); }}
           didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner', 'didFailToReceiveAdWithError', e); }}
-          // adViewWillPresentScreen={() => { console.log('AdMobBanner', 'adViewWillPresentScreen'); }}
-          // adViewWillDismissScreen={() => { console.log('AdMobBanner', 'adViewWillDismissScreen'); }}
-          // adViewDidDismissScreen={() => {console.log('AdMobBanner', 'adViewDidDismissScreen'); }}
-          // adViewWillLeaveApplication={() => { console.log('AdMobBanner', 'adViewWillLeaveApplication'); }}
         />
       </View>
     );
