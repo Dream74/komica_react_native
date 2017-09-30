@@ -5,7 +5,6 @@ import {
   View,
   Text,
   Button,
-  Platform,
   TouchableOpacity,
 } from 'react-native';
 
@@ -23,44 +22,6 @@ const injectJSCode = `
     (function(){ 
       /* 關閉回文 */
       $('div > div.post-head > span.qlink').unbind('click');
-      $('a.file-thumb').unbind('click')
-      $('a.file-thumb').click(function(e) {
-        if( !$(this).has('img').length ) return;
-        if( e.button == 1 ) return;
-        e.preventDefault();
-        
-        var url = $(this).attr('href');
-        var type = url.split('.'); type=type[type.length-1].toLowerCase();
-        var flg = $(this).has('.-expanded').length ? true : false;
-        var html = '';
-  
-  
-        if(type=='webm') {
-          html = '<div class="-expanded" style="margin: 0.2em; display:block;">';
-          html+= '<div>[<span class="expanded-close text-button">收回</span>]</div>';
-          html+= '<video controls loop autoplay muted style="max-width:100%;" src="' + url + '"></video>';
-          html+= '</div>';
-        }
-        else {
-          html = '<div class="-expanded" style="margin: 0.2em; display:block;"><img class="expanded-element expanded-close" style="max-width:100%;  cursor:pointer;" src="' + url + '"></img></div>';
-        }
-        $(this).hide();
-        $(this).after(html);
-        
-        $(this).next('div.-expanded').find('.expanded-close').click(function(e) {
-          $(this).closest('.-expanded').parent().children('.file-thumb').each(function() {
-            if( !$(this).has('img').length ) return;
-            $(this).show();
-          });
-          
-          var cur = $(this).closest('.post').offset().top;
-          var h1 = $(window).scrollTop();
-          var h2 = h1 + $(window).innerHeight();
-          if(cur<h1 || cur>h2) $('html,body').animate({scrollTop:cur}, 0);
-          
-          $(this).closest('.-expanded').remove();
-        });
-      }); 
     }());
 `;
 
@@ -111,6 +72,24 @@ const SwitchPage = ({ baseUrl, forwardUrl, nextUrl, onPress }) => {
   );
 };
 
+const WebViewGoback = ({ onPress }) => (
+  <View style={{
+    flexDirection: 'row',
+    padding: 10,
+  }}
+  >
+    <TouchableOpacity
+      style={{
+        justifyContent: 'center',
+        alignContent: 'center',
+      }}
+      onPress={() => { onPress(); }}
+    >
+      <Text style={{ color: 'white', fontSize: 25 }}>返回看板</Text>
+    </TouchableOpacity>
+  </View>
+);
+
 SwitchPage.propTypes = {
   baseUrl: PropTypes.string,
   forwardUrl: PropTypes.string,
@@ -136,6 +115,7 @@ export default class Board extends React.Component {
       loading: false,
       fail: false,
       html: '',
+      goback: false,
     };
   }
 
@@ -149,17 +129,36 @@ export default class Board extends React.Component {
     const oldUrl = this.props.url;
 
     if (newUrl !== oldUrl) {
+      this.setState({
+        goback: false,
+      });
       this.parseHTML(newUrl);
     }
   }
 
   parseHTML(url) {
+    console.log('parseHTML', url);
     this.setState({
       loading: true,
       fail: false,
       html: '',
     });
 
+    // url is image or video
+
+    if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(url)) {
+      console.log('Url', url, 'is image.');
+      this.setState({
+        html: `<html><body><img src='${url}'></body></html>`,
+        forwardUrl: undefined,
+        nextUrl: undefined,
+        fail: false,
+        loading: false,
+      });
+      return;
+    }
+
+    console.log('Url', url, 'is Web.');
     fetch(url)
       .then((res) => {
         if (!res.ok) {
@@ -170,6 +169,7 @@ export default class Board extends React.Component {
       })
       .then(res => res.text())
       .then((body) => {
+        console.log('parseHTML before');
         const $ = cio.load(body);
 
         const forwardUrl = $('#page_switch > table > tr > td:nth-child(1) > form').attr('action') || $('.page_switch > div.ul > div.forward > a').attr('href');
@@ -193,7 +193,7 @@ export default class Board extends React.Component {
         */
 
         // remove un-used areas.
-        let ruleBeRemoved = '#header,#toplink,#postform,#del,#footer,#topiclist,center,.top,input,.-del-button,.rlink';
+        let ruleBeRemoved = '#header,#toplink,#postform,#del,#footer,#topiclist,center,.top,input,.-del-button';
         // switch page
         ruleBeRemoved += ',#page_switch,.page_switch';
         // Monitor Javascript
@@ -202,10 +202,11 @@ export default class Board extends React.Component {
         ruleBeRemoved += ',hr:nth-last-child(-n+2)';
         // it only be used in ads.
         ruleBeRemoved += ',style,.ads_right';
-        $(ruleBeRemoved).remove();
 
-        // Prevent click link
-        $("a:not([class='file-thumb'])").attr('href', 'javascript:void(0)');
+        // something...
+        ruleBeRemoved += ',.qlink,.report_btn';
+
+        $(ruleBeRemoved).remove();
 
         $('body').append(`<style type="text/css">
 html {
@@ -246,6 +247,7 @@ a:link, .qlink, .text-button {
         };
       })
       .then(({ html, forwardUrl, nextUrl }) => {
+        console.log('parseHTML after');
         this.setState({
           html,
           forwardUrl,
@@ -337,6 +339,7 @@ a:link, .qlink, .text-button {
     }
 
 
+    console.log('Render Loading WebView');
     return (
       <View style={{
         flex: 1,
@@ -348,26 +351,34 @@ a:link, .qlink, .text-button {
             html,
             baseUrl: url,
           }}
-          injectedJavaScript={injectJSCode}
+          // injectedJavaScript={injectJSCode}
           onNavigationStateChange={(navState) => {
+            const { title } = navState;
+            const updateUrl = navState.url;
+            console.log('onNavigationStateChange', url, updateUrl);
+            if (title === '' || updateUrl === undefined || url === updateUrl || !(/^https?:.+/i).test(updateUrl)) {
+              return;
+            }
+
+            this.parseHTML(updateUrl);
+            this.setState({ goback: true });
             console.log('onNavigationStateChange', navState);
           }}
 
+          onLoadStart={() => { console.log('WebView onLoadStart Event'); }}
+          onLoad={() => { console.log('WebView onLoad Event'); }}
           onError={() => { this.setState({ fail: true }); }}
-          // renderError={ErrView}
           automaticallyAdjustContentInsets
           // iOS only
-          onShouldStartLoadWithRequest={(event) => {
-            console.log('onShoudleStartLoadWithRequest', event);
-            return true;
-          }}
           allowsInlineMediaPlayback
           dataDetectorTypes="none"
           scalesPageToFit={false}
+          bounces={false}
           // android only
           domStorageEnabled
           javaScriptEnabled
         />
+        {WebViewGobackView}
         <SwitchPage
           baseUrl={url}
           forwardUrl={forwardUrl}
