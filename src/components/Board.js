@@ -68,7 +68,7 @@ export default class Board extends React.Component {
 
     // url is image or video
 
-    if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(url)) {
+    if ((/\.(gif|jpe?g|png|webm)$/i).test(url)) {
       console.log('Url', url, 'is image.');
       this.setState({
         html: `<html><body><img src='${url}'></body></html>`,
