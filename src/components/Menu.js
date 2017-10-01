@@ -12,6 +12,7 @@ import {
   AdMobBanner,
 } from 'react-native-admob';
 
+import { komica_board } from '../config/board';
 import { ADMOB_BANNDER_AD_UNIT_ID } from '../config/ads';
 import { backgroundColor } from '../styles/GlobalStyles';
 

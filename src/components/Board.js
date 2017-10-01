@@ -18,8 +18,8 @@ import cio from 'cheerio-without-node-native';
 
 import { komica_board } from '../config/board';
 import { ADMOB_BANNDER_AD_UNIT_ID, ADMOB_INTERSTITIAL_AD_UNIT_ID } from '../config/ads';
-import SwitchPage from 'SwitchPage';
-import WebViewGoback from 'WebViewGoback';
+import SwitchPage from './SwitchPage';
+import WebViewGoback from './WebViewGoback';
 
 const injectJSCode = `
     (function(){ 
