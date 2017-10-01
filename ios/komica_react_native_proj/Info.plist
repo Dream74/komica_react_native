@@ -78,7 +78,7 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
-	<key>UILaunchStoryboardName</key>
+	<key>UILaunchImageFile</key>
 	<string>LaunchImage-1</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
@@ -88,8 +88,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>UILaunchImageFile</key>
-	<string>LaunchImage-1</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
