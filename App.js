@@ -4,8 +4,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StatusBar,
-  Platform,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Entypo';
