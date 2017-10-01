@@ -16,93 +16,15 @@ import {
 } from 'react-native-admob';
 import cio from 'cheerio-without-node-native';
 
+import { komica_board } from '../config/board';
 import { ADMOB_BANNDER_AD_UNIT_ID, ADMOB_INTERSTITIAL_AD_UNIT_ID } from '../config/ads';
+import SwitchPage from 'SwitchPage';
+import WebViewGoback from 'WebViewGoback';
 
 const injectJSCode = `
     (function(){ 
-      /* 關閉回文 */
-      $('div > div.post-head > span.qlink').unbind('click');
     }());
 `;
-
-const SwitchPage = ({ baseUrl, forwardUrl, nextUrl, onPress }) => {
-  if (forwardUrl === undefined && nextUrl === undefined) {
-    return null;
-  }
-
-  return (
-    <View style={{
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      padding: 10,
-    }}
-    >
-      <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}
-        onPress={() => {
-          if (forwardUrl !== undefined) {
-            console.log(forwardUrl);
-            if (onPress) onPress(baseUrl + forwardUrl);
-          }
-        }}
-        disabled={!forwardUrl}
-      >
-        <Text style={{ color: (!forwardUrl) ? '#3c4b63' : 'white', fontSize: 25 }}>上一頁</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}
-        onPress={() => {
-          if (nextUrl !== undefined) {
-            console.log(forwardUrl);
-            if (onPress) onPress(baseUrl + nextUrl);
-          }
-        }}
-        disabled={!nextUrl}
-      >
-        <Text style={{ color: (!nextUrl) ? '#3c4b63' : 'white', fontSize: 25 }}>下一頁</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const WebViewGoback = ({ onPress }) => (
-  <View style={{
-    flexDirection: 'row',
-    padding: 10,
-  }}
-  >
-    <TouchableOpacity
-      style={{
-        justifyContent: 'center',
-        alignContent: 'center',
-      }}
-      onPress={() => { onPress(); }}
-    >
-      <Text style={{ color: 'white', fontSize: 25 }}>返回看板</Text>
-    </TouchableOpacity>
-  </View>
-);
-
-SwitchPage.propTypes = {
-  baseUrl: PropTypes.string,
-  forwardUrl: PropTypes.string,
-  nextUrl: PropTypes.string,
-  onPress: PropTypes.func,
-};
-
-SwitchPage.defaultProps = {
-  baseUrl: '',
-  forwardUrl: undefined,
-  nextUrl: undefined,
-  onPress: undefined,
-};
 
 export default class Board extends React.Component {
   constructor(props) {
@@ -349,7 +271,7 @@ a:link, .qlink, .text-button {
             html,
             baseUrl: url,
           }}
-          // injectedJavaScript={injectJSCode}
+          injectedJavaScript={injectJSCode}
           onNavigationStateChange={(navState) => {
             const { title } = navState;
             const updateUrl = navState.url;

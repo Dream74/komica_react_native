@@ -15,5 +15,6 @@ module.exports = {
       "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
       "react/forbid-prop-types": "off",
       'camelcase': 'off',
+      'react/prefer-stateless-function': 'off',
     }
 };
