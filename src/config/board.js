@@ -4,9 +4,11 @@ module.exports = {
 [
   { category: '連線板',
     data: [
-      { title: '2CAT', url: 'https://2cat.ml/' },
       { title: '貓管理部', url: 'https://2cat.ml/~ad/0d/' },
       { title: '站務公告', url: 'https://komica.blogspot.com/' },
+      { title: '車', url: 'https://no_99.mymoe.moe/cars/' },
+      /*
+      { title: '2CAT', url: 'https://2cat.ml/' },
       { title: '動畫', url: 'https://2cat.ml/~tedc21thc/anime/' },
       { title: '漫畫', url: 'https://2cat.ml/~scribe/2c/' },
       { title: '影視', url: 'https://aqua.komica.org/04/' },
@@ -28,7 +30,6 @@ module.exports = {
       { title: '蘿蔔', url: 'https://aqua.komica.org/15/' },
       { title: '攝影', url: 'https://aqua.komica.org/50/' },
       { title: '軍武', url: 'https://aqua.komica.org/17/' },
-      { title: '車', url: 'https://no_99.mymoe.moe/cars/' },
       { title: '萌', url: 'https://2cat.ml/~kirur/img2/' },
       { title: '詢問', url: 'https://2cat.ml/~kirur/orz/' },
       { title: 'AA', url: 'https://rthost.fam.cx/aa/' },
@@ -37,16 +38,18 @@ module.exports = {
       { title: '投票所', url: 'https://komica.yucie.net/vote/' },
       { title: '問答', url: 'https://komica.yucie.net/quiztest/' },
       // { title: 'UP', url: 'https://rthost.fam.cx/komica-up/upload.php' },
+      */
     ] },
   { category: '連線二版',
     data: [
-      { title: '綜合學術', url: 'https://gzone-anime.info/UnitedSites/academic/' },
       { title: '數學', url: 'https://study.mymoe.moe/math/' },
       { title: '歷史', url: 'https://study.mymoe.moe/history/' },
+      { title: '財經', url: 'https://2cat.org/~finance/' },
+      /*
+      { title: '綜合學術', url: 'https://gzone-anime.info/UnitedSites/academic/' },
       { title: '地理', url: 'https://study.mymoe.moe/geography/' },
       { title: '校園', url: 'https://komicolle.dreamhosters.com/school/' },
       { title: '職業', url: 'https://2cat.org/~career/' },
-      { title: '財經', url: 'https://2cat.org/~finance/' },
       { title: '生活消費', url: 'https://gzone-anime.info/UnitedSites/shopping/' },
       { title: '法律', url: 'https://2cat.org/~law/' },
       { title: '海外', url: 'https://next.nagatoyuki.org/outremer/' },
@@ -85,7 +88,9 @@ module.exports = {
       { title: '讀書筆記', url: 'https://mymoe.moe/boards/24/mindmap/' },
       { title: '煩惱相談', url: 'https://next.nagatoyuki.org/conseil/' },
       { title: '安價', url: 'https://next.nagatoyuki.org/ancre/' },
+      */
     ] },
+  /*
   { category: '影音',
     data: [
       { title: '短片', url: 'https://2cat.ml/~touhonoob/21d/' },
@@ -323,5 +328,6 @@ module.exports = {
       { title: '花澤', url: 'https://kana.keyfans.net/' },
       { title: '偶像', url: 'https://yuutan.mymoe.moe/idol/' },
     ] },
+    */
 ],
 };
