@@ -6,6 +6,7 @@ import {
   Text,
   SectionList,
   View,
+  Dimensions,
 } from 'react-native';
 
 import {
@@ -13,7 +14,7 @@ import {
 } from 'react-native-admob';
 
 import { komica_board } from '../config/board';
-import { ADMOB_BANNDER_AD_UNIT_ID } from '../config/ads';
+import { ADMOB_MENU_BANNDER_AD_UNIT_ID } from '../config/ads';
 import { backgroundColor } from '../styles/GlobalStyles';
 
 const styles = StyleSheet.create({
@@ -29,13 +30,13 @@ const styles = StyleSheet.create({
 });
 
 export default function Menu({ onItemSelected }) {
+  const { height } = Dimensions.get('window');
   return (
     <View style={{ flex: 1, backgroundColor }}>
-
       <AdMobBanner
-        bannerSize="mediumRectangle"
+        bannerSize={(height >= 500) ? 'mediumRectangle' : 'largeBanner'}
         testDeviceID="EMULATOR"
-        adUnitID={ADMOB_BANNDER_AD_UNIT_ID}
+        adUnitID={ADMOB_MENU_BANNDER_AD_UNIT_ID}
         adViewDidReceiveAd={() => { console.log('AdMobBanner', 'adViewDidReceiveAd'); }}
         didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner', 'didFailToReceiveAdWithError', e); }}
       />

@@ -15,7 +15,7 @@ import {
 import cio from 'cheerio-without-node-native';
 
 import { komica_board } from '../config/board';
-import { ADMOB_BANNDER_AD_UNIT_ID, ADMOB_INTERSTITIAL_AD_UNIT_ID } from '../config/ads';
+import { ADMOB_BANNDER_AD_UNIT_ID, ADMOB_LOADING_BANNDER_AD_UNIT_ID } from '../config/ads';
 import SwitchPage from './SwitchPage';
 import WebViewGoback from './WebViewGoback';
 
@@ -270,7 +270,7 @@ export default class Board extends React.Component {
           <AdMobBanner
             bannerSize="mediumRectangle"
             testDeviceID="EMULATOR"
-            adUnitID={ADMOB_BANNDER_AD_UNIT_ID}
+            adUnitID={ADMOB_LOADING_BANNDER_AD_UNIT_ID}
             didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner', 'didFailToReceiveAdWithError', e); }}
           />
 
