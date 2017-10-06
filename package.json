@@ -1,6 +1,6 @@
 {
   "name": "komica_react_native_proj",
-  "version": "0.1.0",
+  "version": "1.0.4",
   "private": true,
   "devDependencies": {
     "babel-eslint": "^7.2.3",
