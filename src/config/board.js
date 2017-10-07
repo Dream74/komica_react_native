@@ -2,6 +2,17 @@
 module.exports = {
   komica_board:
 [
+  { category: '熱門看板',
+    data: [
+      { title: '綜合', url: 'https://rem.komica2.net/00/' },
+      { title: '四格', url: 'https://aqua.komica.org/42/' },
+      { title: '歡樂惡搞', url: 'https://aqua.komica.org/12/' },
+      { title: '男性角色', url: 'https://aqua.komica.org/38/' },
+      { title: '女性角色', url: 'https://aqua.komica.org/19/' },
+      { title: '蘿蔔', url: 'https://aqua.komica.org/15/' },
+      { title: 'GIF', url: 'https://aqua.komica.org/23/' },
+    ] },
+  /*
   { category: '連線板',
     data: [
       { title: '2CAT', url: 'https://2cat.ml/' },
@@ -323,5 +334,6 @@ module.exports = {
       { title: '花澤', url: 'https://kana.keyfans.net/' },
       { title: '偶像', url: 'https://yuutan.mymoe.moe/idol/' },
     ] },
+  */
 ],
 };
