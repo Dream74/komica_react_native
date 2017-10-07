@@ -4,6 +4,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Entypo';
@@ -60,37 +61,45 @@ export default class App extends React.Component {
       <View
         style={{
           flex: 1,
-          backgroundColor,
+          backgroundColor: '#3c4b63',
         }}
       >
-        <SideMenu
-          menu={menu}
-          isOpen={this.state.isOpen}
-          onChange={isOpen => this.updateMenuState(isOpen)}
-          openMenuOffset={300}
+        <View
+          style={{
+            flex: 1,
+            backgroundColor,
+            marginTop: (Platform.OS === 'ios') ? 18 : 0,
+          }}
         >
-          <View style={styles.container}>
-            <View style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 48,
-            }}
-            >
-              <TouchableOpacity onPress={this.toggle} style={{ position: 'absolute', left: 18 }}>
-                <Icon name="menu" size={32} color="#a1fbe2" />
-              </TouchableOpacity>
-              <Text style={{ fontSize: 24, color: '#a1fbe2' }}>{title}</Text>
-            </View>
-            <Board
-              style={{
-                backgroundColor: 'blue',
-                flex: 1,
+          <SideMenu
+            menu={menu}
+            isOpen={this.state.isOpen}
+            onChange={isOpen => this.updateMenuState(isOpen)}
+            openMenuOffset={300}
+          >
+            <View style={styles.container}>
+              <View style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 48,
               }}
-              title={title}
-              url={url}
-            />
-          </View>
-        </SideMenu>
+              >
+                <TouchableOpacity onPress={this.toggle} style={{ position: 'absolute', left: 18 }}>
+                  <Icon name="menu" size={32} color="#a1fbe2" />
+                </TouchableOpacity>
+                <Text style={{ fontSize: 24, color: '#a1fbe2' }}>{title}</Text>
+              </View>
+              <Board
+                style={{
+                  backgroundColor: 'blue',
+                  flex: 1,
+                }}
+                title={title}
+                url={url}
+              />
+            </View>
+          </SideMenu>
+        </View>
       </View>
     );
   }
