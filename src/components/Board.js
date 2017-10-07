@@ -128,10 +128,11 @@ export default class Board extends React.Component {
             rlink: 回應文章按鈕
             script:not([src*='common']: 所有非必要的 JS, ex: GA, ...
             hr:nth-last-child(-n+2): 塞廣告的分割線
+            report-btn: 回報
           */
 
           // remove un-used areas.
-          let ruleBeRemoved = '#header,#toplink,#postform,#del,#footer,#topiclist,center,.top,input,.-del-button';
+          let ruleBeRemoved = '#header,#toplink,#postform,#del,#footer,#topiclist,center,.top,input,.-del-button,.report-btn';
           // switch page
           ruleBeRemoved += ',#page_switch,.page_switch';
           // Monitor Javascript
