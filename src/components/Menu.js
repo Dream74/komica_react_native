@@ -18,16 +18,30 @@ import { ADMOB_MENU_BANNDER_AD_UNIT_ID } from '../config/ads';
 import { backgroundColor } from '../styles/GlobalStyles';
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    paddingBottom: 5,
-    color: 'white',
-  },
   sectionHeader: {
     color: '#a1fbe2',
     fontSize: 32,
   },
 });
+
+const ItemView = onItemSelected => ({ item }) => (
+  <TouchableOpacity
+    onPress={() => { onItemSelected(item); }}
+    style={{
+      justifyContent: 'center',
+      height: 50,
+      marginBottom: 1,
+      borderBottomWidth: 1,
+      borderBottomColor: '#424242',
+    }}
+  >
+    <Text style={{
+      fontSize: 25,
+      color: 'white',
+    }}
+    >{item.title}</Text>
+  </TouchableOpacity>
+);
 
 export default function Menu({ onItemSelected }) {
   const { height } = Dimensions.get('window');
@@ -43,15 +57,8 @@ export default function Menu({ onItemSelected }) {
 
       <SectionList
         sections={komica_board}
-        renderItem={({ item }) =>
-          (<TouchableOpacity
-            onPress={() => { onItemSelected(item); }}
-          >
-            <Text style={styles.title}>{item.title}</Text>
-          </TouchableOpacity>)
-        }
+        renderItem={ItemView(onItemSelected)}
         renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.category}</Text>}
-        style={{ margin: 10 }}
       />
     </View>
 
