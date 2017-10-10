@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     color: '#a1fbe2',
     fontSize: 32,
+    padding: 5,
   },
 });
 
@@ -31,15 +32,17 @@ const ItemView = onItemSelected => ({ item }) => (
       justifyContent: 'center',
       height: 50,
       marginBottom: 1,
-      borderBottomWidth: 1,
-      borderBottomColor: '#424242',
+      borderTopWidth: 1,
+      borderTopColor: '#424242',
     }}
   >
     <Text style={{
-      fontSize: 25,
+      marginLeft: 30,
+      fontSize: 18,
       color: 'white',
     }}
     >{item.title}</Text>
+
   </TouchableOpacity>
 );
 
