@@ -1,11 +1,8 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
   WebView,
   View,
-  Text,
-  Button,
 } from 'react-native';
 
 import urlLib from 'url';
@@ -15,9 +12,11 @@ import {
 import cio from 'cheerio-without-node-native';
 
 import { komica_board } from '../config/board';
-import { ADMOB_BANNDER_AD_UNIT_ID, ADMOB_LOADING_BANNDER_AD_UNIT_ID } from '../config/ads';
+import { ADMOB_BANNDER_AD_UNIT_ID } from '../config/ads';
 import SwitchPage from './SwitchPage';
 import WebViewGoback from './WebViewGoback';
+import WebViewLoading from './WebViewLoading';
+import WebViewFail from './WebViewFail';
 
 const injectJSCode = `
     (function(){ 
@@ -260,56 +259,10 @@ export default class Board extends React.Component {
 
     if (loading) {
       console.log('Render Loading');
-      return (
-        <View style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        >
-
-          <AdMobBanner
-            bannerSize="mediumRectangle"
-            testDeviceID="EMULATOR"
-            adUnitID={ADMOB_LOADING_BANNDER_AD_UNIT_ID}
-            didFailToReceiveAdWithError={(e) => { console.log('AdMobBanner', 'didFailToReceiveAdWithError', e); }}
-          />
-
-          <Text style={{
-            fontSize: 24,
-            padding: 30,
-            color: '#a1fbe2',
-          }}
-          >正在載入中</Text>
-
-        </View>);
+      return (<WebViewLoading />);
     } else if (fail) {
       console.log('Render fail');
-      return (
-        <View style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        >
-          <Text style={{
-            fontSize: 16,
-            paddingBottom: 30,
-            color: '#a1fbe2',
-          }}
-          >網路連線失敗，請檢查網路狀態後再重新整理</Text>
-
-          <View style={{
-            backgroundColor: '#a1fbe2',
-          }}
-          >
-            <Button
-              title="重新整理"
-              onPress={this.error}
-              color="black"
-            />
-          </View>
-        </View>);
+      return (<WebViewFail onError={this.error} />);
     }
 
     console.log('Render Loading WebView');
@@ -338,6 +291,8 @@ export default class Board extends React.Component {
             console.log('onNavigationStateChange', navState);
           }}
 
+          renderLoading={<WebViewLoading />}
+          renderError={<WebViewFail onError={this.error} />}
           onLoadStart={() => { console.log('WebView onLoadStart Event'); }}
           onLoad={() => { console.log('WebView onLoad Event'); }}
           onError={() => { this.setState({ fail: true }); }}
