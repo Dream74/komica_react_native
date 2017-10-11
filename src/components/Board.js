@@ -131,13 +131,16 @@ export default class Board extends React.Component {
           */
 
           // remove un-used areas.
-          let ruleBeRemoved = '#header,#toplink,#postform,#del,#footer,#topiclist,center,.top,input,.-del-button,.report-btn';
+          let ruleBeRemoved = '#header,#toplink,#del,#footer,#topiclist,center,.top,.-del-button,.report-btn';
+          // post info
+          ruleBeRemoved += ',#postinfo';
+          ruleBeRemoved += ",input[name='sendbtn']";
+          // remove article button
+          ruleBeRemoved += ",input[value='delete']";
           // switch page
           ruleBeRemoved += ',#page_switch,.page_switch';
           // Monitor Javascript
           ruleBeRemoved += ",script:not([src*='common'])";
-          // ugly line
-          ruleBeRemoved += ',hr:nth-last-child(-n+2)';
           // it only be used in ads.
           ruleBeRemoved += ',style,.ads_right';
 
@@ -145,6 +148,10 @@ export default class Board extends React.Component {
           ruleBeRemoved += ',.qlink,.report_btn';
 
           $(ruleBeRemoved).remove();
+
+          $('textarea').attr('cols', '40');
+
+          $('#postform_tbl>tr:last-child>td:last-child').append('<input type="submit" name="sendbtn" value="送 出">');
 
           $('body').append(`<style type="text/css">
   html {
@@ -173,8 +180,27 @@ export default class Board extends React.Component {
       text-decoration: none;
   }
   
-  .post:target { background: #181818; } 
-  .popup { background: #282A2E; }
+  .post:target { 
+      background: #181818; 
+  }
+
+  input[type='text'], textarea {
+      width: 100%;
+  }
+
+  .popup { 
+      background: #282A2E; 
+  }
+
+  input[type="submit"] {
+    float:right;
+  }
+
+  .Form_bg {
+      background: #3c4b63;
+      color: #a1fbe2;
+      font-size: 18px;
+  }
   </style>
   <style type="text/css">
   `);
